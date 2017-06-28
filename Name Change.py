@@ -9,9 +9,11 @@ def main():
     dotNum = 0
     option = options()
     print(option)
-    fromDir = input("Current Folder: ")
+    
+    fromDir = validateDir(input("Current Folder: "))
+    
     if option != 3:
-        toDir = input("Destination: ")
+        toDir = validateDir(input("Destination: "))
     dotNum = int(input("Enter number of words to be included: "))
     print(str(copy(fromDir, "", dotNum, True)))
     
@@ -21,14 +23,17 @@ def main():
     if discontinue == "n":
         main()
     elif option == "1":
-        copy(fromDir, toDir, dotNum)
+        copy(fromDir, toDir, dotNum, False)
     elif option == "2":
-        copy(fromDir, toDir, dotNum)
+        copy(fromDir, toDir, dotNum, False)
     elif option == "3":
-        copy(fromDir, fromDir, dotNum)
+        copy(fromDir, fromDir, dotNum, False)
     else:
         print("Error")
-        
+def validateDir(inputDir):
+    return inputDir.replace('"', '')
+    
+    
 def copy(fromDir, toDir, dotNum, scan):
     itemNumber = 0
     for i in os.listdir(fromDir):
@@ -44,7 +49,7 @@ def copy(fromDir, toDir, dotNum, scan):
             if scan == False:
                 fileDirectory = fromDir + SLASH + i
                 shutil.move(fileDirectory,  toDir + SLASH + rename(i, dotNum) + DOT + TYPE)
-                print("coppied %s" % i)
+                print("Converted: %s" % i)
             else:
                 print(i)
                 itemNumber = itemNumber + 1
@@ -64,6 +69,7 @@ def options():
     print("2.Copy")
     print("3.Rename")
     return input("Enter Option: ")
+    
 
 main()
 
