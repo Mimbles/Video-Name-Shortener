@@ -7,29 +7,19 @@ def main():
     fromDir = ""
     toDir = ""
     dotNum = 0
-    option = options()
-    print(option)
+    stop = "" 
     
     fromDir = validateDir(input("Current Folder: "))
     
-    if option != 3:
-        toDir = validateDir(input("Destination: "))
+    
+    toDir = validateDir(input("Destination: "))
     dotNum = int(input("Enter number of words to be included: "))
     print(str(copy(fromDir, "", dotNum, True)))
     
-    discontinue = input("Continue Y/n?: ")
+    #raw_input("Continue Y/n?: ") #Caused error due to input needing quotations
     
-
-    if discontinue == "n":
-        main()
-    elif option == "1":
-        copy(fromDir, toDir, dotNum, False)
-    elif option == "2":
-        copy(fromDir, toDir, dotNum, False)
-    elif option == "3":
-        copy(fromDir, fromDir, dotNum, False)
-    else:
-        print("Error")
+    copy(fromDir, toDir, dotNum, False)
+    
 def validateDir(inputDir):
     return inputDir.replace('"', '')
     
@@ -64,12 +54,6 @@ def rename(name, dotNum):
         newName = newName + splitName[i] + SPACE
     return newName    
 
-def options():
-    print("1.Copy + Rename")
-    print("2.Copy")
-    print("3.Rename")
-    return input("Enter Option: ")
-    
 
 main()
 
