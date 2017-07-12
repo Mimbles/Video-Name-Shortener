@@ -10,14 +10,12 @@ def main():
     stop = "" 
     
     fromDir = validateDir(input("Current Folder: "))
-    
-    
     toDir = validateDir(input("Destination: "))
+    #TYPE = input("Please enter the file type (e.g mp4, mkv)")
     print(str(copy(fromDir, "", dotNum, True)))
     dotNum = int(input("Enter number of words to be included: "))
     
     #raw_input("Continue Y/n?: ") #Caused error due to input needing quotations
-    
     copy(fromDir, toDir, dotNum, False)
     
 def validateDir(inputDir):
@@ -34,9 +32,10 @@ def copy(fromDir, toDir, dotNum, scan):
                 copy(fileDirectory, toDir, dotNum, False)
             else:
                 itemNumber = itemNumber + copy(fileDirectory, "", dotNum,  True)
-        if lst[len(lst) - 1] == "mkv" and not os.path.isdir(fileDirectory):
+        if lst[len(lst) - 1] == TYPE and not os.path.isdir(fileDirectory):
             if scan == False:
                 fileDirectory = fromDir + SLASH + i
+                print(fileDirectory)
                 shutil.move(fileDirectory,  toDir + SLASH + rename(i, dotNum) + DOT + TYPE)
                 print("Converted: %s" % i)
             else:
@@ -51,6 +50,7 @@ def rename(name, dotNum):
     newName = ""
     for i in range(0, dotNum):
         newName = newName + splitName[i] + SPACE
+    newName[-1] = ""
     return newName    
 
 
