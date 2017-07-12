@@ -13,8 +13,8 @@ def main():
     
     
     toDir = validateDir(input("Destination: "))
-    dotNum = int(input("Enter number of words to be included: "))
     print(str(copy(fromDir, "", dotNum, True)))
+    dotNum = int(input("Enter number of words to be included: "))
     
     #raw_input("Continue Y/n?: ") #Caused error due to input needing quotations
     
@@ -31,7 +31,6 @@ def copy(fromDir, toDir, dotNum, scan):
         lst = i.split(".")
         if os.path.isdir(fileDirectory):
             if scan == False:
-                #print("Found Folder")
                 copy(fileDirectory, toDir, dotNum, False)
             else:
                 itemNumber = itemNumber + copy(fileDirectory, "", dotNum,  True)
