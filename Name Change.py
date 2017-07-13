@@ -1,38 +1,43 @@
 import shutil, os
+import sys
 SLASH = "\\"
 SPACE  = " "
 TYPE = "mkv"
 DOT = "."
 def main():
+    print(sys.version)
     fromDir = ""
     toDir = ""
     dotNum = 0
     stop = "" 
-    
     fromDir = validateDir(input("Current Folder: "))
     toDir = validateDir(input("Destination: "))
-    #TYPE = input("Please enter the file type (e.g mp4, mkv)")
-    print(str(copy(fromDir, "", dotNum, True)))
+    print("found: %s Files" % str(copy(fromDir, "", dotNum, True)))
     dotNum = int(input("Enter number of words to be included: "))
     
-    #raw_input("Continue Y/n?: ") #Caused error due to input needing quotations
-    copy(fromDir, toDir, dotNum, False)
+    cancel = input("Continue Y/n?: ")
+    if cancel == "Y" or cancel == "y":
+        copy(fromDir, toDir, dotNum, Faslse)
+    else:
+        main()
     
 def validateDir(inputDir):
     return inputDir.replace('"', '')
     
-    
 def copy(fromDir, toDir, dotNum, scan):
     itemNumber = 0
+    dirList = os.listdir(fromDir)
     for i in os.listdir(fromDir):
         fileDirectory = fromDir + SLASH + i
-        lst = i.split(".")
+        lst = i.split(DOT)
         if os.path.isdir(fileDirectory):
+            print("Folder found")
             if scan == False:
                 copy(fileDirectory, toDir, dotNum, False)
-            else:
+            elif scan == True:
+                print("test")
                 itemNumber = itemNumber + copy(fileDirectory, "", dotNum,  True)
-        if lst[len(lst) - 1] == TYPE and not os.path.isdir(fileDirectory):
+        elif lst[-1] == TYPE:
             if scan == False:
                 fileDirectory = fromDir + SLASH + i
                 print(fileDirectory)
@@ -41,18 +46,15 @@ def copy(fromDir, toDir, dotNum, scan):
             else:
                 print(i)
                 itemNumber = itemNumber + 1
-                return itemNumber
     if scan == True:
          return itemNumber
+        
 def rename(name, dotNum):
-    splitName = name.split(".")
-                           
+    splitName = name.split(DOT)                        
     newName = ""
     for i in range(0, dotNum):
         newName = newName + splitName[i] + SPACE
     newName[-1] = ""
-    return newName    
-
-
+    return newName
 main()
 
